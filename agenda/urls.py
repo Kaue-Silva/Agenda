@@ -28,3 +28,4 @@ urlpatterns = [
     path('agenda/evento/', views.evento),
     path('agenda/evento/submit', views.submit_evento)
 ]
+

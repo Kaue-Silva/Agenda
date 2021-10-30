@@ -8,12 +8,15 @@ from django.contrib import messages
 # def index(request):
 #     return redirect('/agenda')
 
+
 def login_user(request):
     return render(request, 'login.html')
+
 
 def logout_user(request):
     logout(request)
     return redirect('/')
+
 
 def submit_login(request):
     if request.POST:
@@ -40,6 +43,7 @@ def lista_eventos(request):
 @login_required(login_url='/login/')
 def evento(request):
     return render(request, "evento.html")
+
 
 @login_required(login_url='/login/')
 def submit_evento(request):
