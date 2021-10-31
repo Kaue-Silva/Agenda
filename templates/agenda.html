@@ -12,6 +12,9 @@
     
     <ul>
         {%for evento in eventos%}
+        <div style={% if evento.get_evento_atrasado %} 
+                "color:red" 
+            {% endif %}>    
             <li>
                 {{evento.titulo}} - {{evento.get_data_evento}} 
                 (
@@ -19,6 +22,7 @@
                     <a href="evento/delete/{{ evento.id }}">Excluir</a>
                 )
             </li>
+        </div>
         {%endfor%}
     </ul>
 {% endblock %}
