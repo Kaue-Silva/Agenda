@@ -9,12 +9,17 @@
     <a href="evento/">
         <button type="button">Novo Evento</button>
     </a>
+    <a href="historico/">        
+        <button type="button">Historico</button>
+    </a>
     
     <ul>
         {%for evento in eventos%}
         <div style={% if evento.get_evento_atrasado %} 
                 "color:red" 
-            {% endif %}>    
+            {% elif evento.get_evento_prestes_inicio %}
+                "color:yellow"
+            {% endif %}>
             <li>
                 {{evento.titulo}} - {{evento.get_data_evento}} 
                 (

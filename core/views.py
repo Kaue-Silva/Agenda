@@ -46,12 +46,14 @@ def lista_eventos(request):
 
 @login_required(login_url='/login/')
 def evento(request):
-    id_evento = request.GET.get('id')
-    dados = {}
-    if id_evento:
-        dados['evento'] = Evento.objects.get(id=id_evento)
-    return render(request, "evento.html", dados)
-
+    try:
+        id_evento = request.GET.get('id')
+        dados = {}
+        if id_evento:
+            dados['evento'] = Evento.objects.get(id=id_evento)
+        return render(request, "evento.html", dados)
+    except Exception:
+        raise Http404
 
 @login_required(login_url='/login/')
 def submit_evento(request):
@@ -91,6 +93,17 @@ def delete_evento(request, id_evento):
 
 # @login_required(login_url='/login/')
 def json_lista_evento(request, id_usuario):
-    usuario = User.objects.get(id=id_usuario)
-    evento = Evento.objects.filter(usuario=usuario).values('id', 'titulo')
-    return JsonResponse(list(evento), safe=False)
+    try:
+        usuario = User.objects.get(id=id_usuario)
+        evento = Evento.objects.filter(usuario=usuario).values('id', 'titulo')
+        return JsonResponse(list(evento), safe=False)
+    except:
+        raise Http404
+
+@login_required(login_url='/login/')
+def historico(request):
+    data_atual = datetime.now()
+    usuario = request.user
+    eventos = Evento.objects.filter(usuario=usuario, data_evento__lt = data_atual)
+    dados = {'eventos':eventos}
+    return render(request, 'historico.html', dados)
